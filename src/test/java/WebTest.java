@@ -21,9 +21,10 @@ public class WebTest {
         cityInput.setValue("Майкоп");
 
         SelenideElement dateInput = form.find("[data-test-id=date] input");
-        LocalDate dateToInput = LocalDate.now().plusDays(3);
-        dateInput.sendKeys(Keys.CONTROL, Keys.BACK_SPACE);
-        dateInput.setValue(dateToInput.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
+        LocalDate dateToInput = LocalDate.now().plusDays(5);
+        dateInput.sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
+        String date = dateToInput.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        dateInput.setValue(date);
 
         SelenideElement nameAndSurnameInput = form
                 .find("[data-test-id=name] input");
@@ -40,7 +41,10 @@ public class WebTest {
         SelenideElement billButton = form.find(".button_theme_alfa-on-white");
         billButton.click();
 
-        $("[data-test-id=notification]").shouldBe(Condition.appear, Duration.ofSeconds(15));
+        $("[data-test-id=notification]").shouldBe(Condition.appear, Duration.ofSeconds(15))
+                .$$("div.notification__content").filter(Condition.visible).get(0).shouldHave(Condition.exactText(
+                        "Встреча успешно забронирована на " + date
+                ));
     }
 
 }
