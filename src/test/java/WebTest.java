@@ -16,7 +16,6 @@ public class WebTest {
         open("http://localhost:9999");
 
         SelenideElement form = $("form");
-
         SelenideElement cityInput = form.find("[data-test-id=city] input");
         cityInput.setValue("Майкоп");
 
