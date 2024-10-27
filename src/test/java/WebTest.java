@@ -41,10 +41,11 @@ public class WebTest {
         SelenideElement billButton = form.find(".button_theme_alfa-on-white");
         billButton.click();
 
-        $("[data-test-id=notification]").shouldBe(Condition.appear, Duration.ofSeconds(15))
-                .$$("div.notification__content").filter(Condition.visible).get(0).shouldHave(Condition.exactText(
-                        "Встреча успешно забронирована на " + date
-                ));
+        $("[data-test-id=notification] div.notification__content")
+                .shouldBe(Condition.appear, Duration.ofSeconds(15))
+                .shouldHave(Condition.exactText(
+                "Встреча успешно забронирована на " + date
+        ));
     }
 
 }
